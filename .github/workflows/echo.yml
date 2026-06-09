@@ -1,0 +1,10 @@
+name: echo
+
+on: [push, workflow_dispatch]
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hello
+        run: echo "hello, brokkr"

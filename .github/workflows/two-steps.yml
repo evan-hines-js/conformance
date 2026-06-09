@@ -1,0 +1,12 @@
+name: two-steps
+
+on: [push, workflow_dispatch]
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: First
+        run: echo "first-line"
+      - name: Second
+        run: echo "second-line"
