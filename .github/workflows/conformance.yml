@@ -1,4 +1,4 @@
-name: two-steps
+name: step-failure
 
 on: push
 
@@ -6,7 +6,7 @@ jobs:
   job:
     runs-on: ubuntu-latest
     steps:
-      - name: First
-        run: echo "first-line"
-      - name: Second
-        run: echo "second-line"
+      - name: Boom
+        run: exit 1
+      - name: After
+        run: echo "after"
