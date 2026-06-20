@@ -1,4 +1,4 @@
-name: reject-bad-registration-token
+name: continue-on-error
 
 on: push
 
@@ -6,5 +6,8 @@ jobs:
   job:
     runs-on: ubuntu-latest
     steps:
-      - name: Never
-        run: echo "should never run"
+      - name: Failing step
+        continue-on-error: true
+        run: exit 1
+      - name: After
+        run: echo "after"
