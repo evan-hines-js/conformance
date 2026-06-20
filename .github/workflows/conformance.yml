@@ -1,4 +1,4 @@
-name: if-always
+name: step-env
 
 on: push
 
@@ -6,8 +6,7 @@ jobs:
   job:
     runs-on: ubuntu-latest
     steps:
-      - name: Boom
-        run: exit 1
-      - name: Always
-        if: always()
-        run: echo "ran anyway"
+      - name: Echo env
+        env:
+          GREETING: hello-from-env
+        run: echo "$GREETING"
