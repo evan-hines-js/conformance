@@ -1,19 +1,16 @@
-name: env-levels
+name: needs
 
 on: push
 
-env:
-  WF: workflow
-  SHARED: from-workflow
-
 jobs:
-  job:
+  first:
     runs-on: ubuntu-latest
-    env:
-      JOB: jobv
-      SHARED: from-job
     steps:
-      - name: Echo
-        env:
-          STEP: stepv
-        run: echo "wf=$WF job=$JOB step=$STEP shared=$SHARED"
+      - name: First job
+        run: echo "first job"
+  second:
+    runs-on: ubuntu-latest
+    needs: first
+    steps:
+      - name: Second job
+        run: echo "second job"
