@@ -1,4 +1,4 @@
-name: step-env
+name: run-expression
 
 on: push
 
@@ -6,7 +6,5 @@ jobs:
   job:
     runs-on: ubuntu-latest
     steps:
-      - name: Echo env
-        env:
-          GREETING: hello-from-env
-        run: echo "$GREETING"
+      - name: Echo
+        run: echo "repo=${{ github.repository }}"
