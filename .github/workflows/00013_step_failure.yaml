@@ -1,0 +1,12 @@
+name: step-failure
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Boom
+        run: exit 1
+      - name: After
+        run: echo "after"
