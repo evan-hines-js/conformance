@@ -1,4 +1,4 @@
-name: if-context
+name: if-functions
 
 on: push
 
@@ -6,9 +6,12 @@ jobs:
   job:
     runs-on: ubuntu-latest
     steps:
-      - name: On main
-        if: github.ref == 'refs/heads/main'
-        run: echo "branch=${{ github.ref_name }} event=${{ github.event_name }}"
-      - name: On other branch
-        if: github.ref == 'refs/heads/nope'
-        run: echo "should not run"
+      - name: Contains
+        if: contains(github.event_name, 'push')
+        run: echo "contains-ok"
+      - name: StartsWith
+        if: startsWith(github.ref, 'refs/heads/')
+        run: echo "startswith-ok"
+      - name: Negative
+        if: startsWith(github.ref, 'refs/tags/')
+        run: echo "should-not-run"
