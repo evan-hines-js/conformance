@@ -1,0 +1,20 @@
+name: expr-fromjson
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Object field
+        run: |
+          echo "region=${{ fromJSON('{"region":"us-west-2","tier":"gold"}').region }}"
+      - name: Array index
+        run: |
+          echo "third=${{ fromJSON('[10, 20, 30]')[2] }}"
+      - name: Contains over parsed array
+        if: contains(fromJSON('["alpha","beta","gamma"]'), 'beta')
+        run: echo "has-beta"
+      - name: Negative contains
+        if: contains(fromJSON('["alpha","beta","gamma"]'), 'delta')
+        run: echo "should-not-run"

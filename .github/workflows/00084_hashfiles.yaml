@@ -1,0 +1,16 @@
+name: hashfiles
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Seed lockfile
+        run: |
+          mkdir -p deps
+          printf 'lockfile-contents-v1\n' > deps/lock.txt
+      - name: Compute cache key
+        run: echo "key=deps-${{ hashFiles('deps/lock.txt') }}"
+      - name: Stable across calls
+        run: echo "again=deps-${{ hashFiles('deps/lock.txt') }}"

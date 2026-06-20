@@ -1,0 +1,10 @@
+name: github-event
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: echo "msg=${{ github.event.head_commit.message }}"

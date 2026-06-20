@@ -1,0 +1,17 @@
+name: working-directory
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make dir
+        run: mkdir -p sub/nested
+      - name: In subdir
+        working-directory: sub/nested
+        run: |
+          echo "pwd=$(pwd)"
+          echo "marker-content" > here.txt
+      - name: Verify
+        run: cat sub/nested/here.txt

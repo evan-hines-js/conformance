@@ -1,0 +1,24 @@
+name: job-output-image-ref
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.publish.outputs.image }}
+    steps:
+      - name: Publish
+        id: publish
+        # The cross-job FAILURE MODE: a job output carrying a full OCI digest reference — host:port,
+        # /path, :tag, and @sha256:<64hex>. A trivial value ("green", 00042) crosses `needs` fine;
+        # this is the value shape a real apko/docker build emits, and it must survive the handoff
+        # verbatim. (A sample-fips build saw it arrive EMPTY in the consumer → trivy scanned `.`.)
+        run: echo "image=reg.local:3000/octo/demo:fips@sha256:1111111111111111111111111111111111111111111111111111111111111111" >> "$GITHUB_OUTPUT"
+
+  scan:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Consume
+        run: echo "scanning ${{ needs.build.outputs.image }}"

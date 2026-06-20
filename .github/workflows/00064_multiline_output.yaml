@@ -1,0 +1,19 @@
+name: multiline-output
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate
+        id: gen
+        run: |
+          {
+            echo "notes<<EOF"
+            echo "first line"
+            echo "second line"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+      - name: Consume
+        run: echo "notes=[${{ steps.gen.outputs.notes }}]"

@@ -1,0 +1,19 @@
+name: env-context
+
+on: push
+
+env:
+  STAGE: build
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    env:
+      TARGET: linux
+    steps:
+      - name: Read env context
+        if: env.STAGE == 'build'
+        run: echo "stage=${{ env.STAGE }} target=${{ env.TARGET }}"
+      - name: Skip on mismatch
+        if: env.TARGET == 'windows'
+        run: echo "should-not-run"

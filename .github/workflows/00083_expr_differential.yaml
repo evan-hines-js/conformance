@@ -1,0 +1,39 @@
+name: expr-differential
+
+on: push
+
+# Brokkr has TWO expression evaluators: job-level `if:` runs broker-side on Brokkr.Expression,
+# step-level `if:` runs runner-side on the stock runner's evaluator. A semantic divergence would
+# gate jobs and steps differently and nothing would notice (TEST-5). Each job below evaluates the
+# SAME compound expression on both sides; agreement is the assertion.
+jobs:
+  # TRUE expression on BOTH sides: the broker runs the job (job if true) AND the runner runs the
+  # step (step if, same expression, true). Both fired ⇒ both said true.
+  agree-true:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref_name, 'ma') && contains(github.repository, '/')
+    steps:
+      - name: Step agrees true
+        if: startsWith(github.ref_name, 'ma') && contains(github.repository, '/')
+        run: echo "agree-true"
+      - name: Step agrees true negated
+        if: ${{ !(startsWith(github.ref_name, 'ma') && contains(github.repository, '/')) }}
+        run: echo "should-not-run"
+
+  # FALSE expression, runner side: this job always runs; the runner skips the gated step.
+  agree-false-step:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step agrees false
+        if: endsWith(github.ref, '/nope') || startsWith(github.ref_name, 'zz')
+        run: echo "should-not-run"
+      - name: Marker
+        run: echo "runner-evaluated-false"
+
+  # FALSE expression, broker side: the SAME expression as a job `if:` ⇒ the broker skips the job.
+  agree-false-job:
+    runs-on: ubuntu-latest
+    if: endsWith(github.ref, '/nope') || startsWith(github.ref_name, 'zz')
+    steps:
+      - name: Never
+        run: echo "should-not-run"

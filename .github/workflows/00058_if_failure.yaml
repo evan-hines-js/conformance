@@ -1,0 +1,16 @@
+name: if-failure
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Boom
+        run: exit 1
+      - name: On failure
+        if: failure()
+        run: echo "cleanup-on-failure"
+      - name: On success
+        if: success()
+        run: echo "should-not-run"

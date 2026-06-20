@@ -1,0 +1,10 @@
+name: runner-lost
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sleep
+        run: sleep 300

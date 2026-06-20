@@ -1,0 +1,13 @@
+name: matrix
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        fruit: [apple, banana]
+    steps:
+      - name: Echo
+        run: echo "fruit=${{ matrix.fruit }}"

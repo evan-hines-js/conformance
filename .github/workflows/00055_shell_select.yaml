@@ -1,0 +1,13 @@
+name: shell-select
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Default is bash
+        run: echo "default=${BASH_VERSION:+bash}"
+      - name: Explicit sh
+        shell: sh
+        run: echo "explicit=${BASH_VERSION:-not-bash}"

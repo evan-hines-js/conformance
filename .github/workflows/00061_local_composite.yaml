@@ -1,0 +1,12 @@
+name: local-composite
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Greet
+        uses: ./.github/actions/greet

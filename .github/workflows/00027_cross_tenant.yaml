@@ -1,0 +1,10 @@
+name: cross-tenant
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: echo "ran in ${GITHUB_REPOSITORY}"

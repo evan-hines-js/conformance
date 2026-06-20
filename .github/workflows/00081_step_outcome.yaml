@@ -1,0 +1,18 @@
+name: step-outcome
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Try
+        id: try
+        continue-on-error: true
+        run: exit 3
+      - name: Recover
+        if: steps.try.outcome == 'failure'
+        run: echo "recovered outcome=${{ steps.try.outcome }} conclusion=${{ steps.try.conclusion }}"
+      - name: Skip when ok
+        if: steps.try.outcome == 'success'
+        run: echo "should-not-run"

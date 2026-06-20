@@ -1,0 +1,40 @@
+name: job-if-vars-star
+
+on: push
+
+jobs:
+  a:
+    runs-on: ubuntu-latest
+    steps:
+      - name: A
+        run: echo "a-ok"
+
+  b:
+    runs-on: ubuntu-latest
+    steps:
+      - name: B
+        run: exit 1
+
+  triage:
+    runs-on: ubuntu-latest
+    needs: [a, b]
+    if: always() && contains(needs.*.result, 'failure')
+    steps:
+      - name: Triage
+        run: echo "triage-ran results=${{ join(needs.*.result, ',') }}"
+
+  ship:
+    runs-on: ubuntu-latest
+    needs: a
+    if: vars.SHIP == 'yes'
+    steps:
+      - name: Ship
+        run: echo "ship-ran region=${{ vars.SHIP }}"
+
+  noship:
+    runs-on: ubuntu-latest
+    needs: a
+    if: vars.SHIP == 'no'
+    steps:
+      - name: NoShip
+        run: echo "should-not-run"

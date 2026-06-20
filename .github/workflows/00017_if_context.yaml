@@ -1,0 +1,14 @@
+name: if-context
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: On main
+        if: github.ref == 'refs/heads/main'
+        run: echo "branch=${{ github.ref_name }} event=${{ github.event_name }}"
+      - name: On other branch
+        if: github.ref == 'refs/heads/nope'
+        run: echo "should not run"

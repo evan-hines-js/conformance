@@ -1,0 +1,16 @@
+name: job-continue-on-error
+
+on: push
+
+jobs:
+  flaky:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Fail
+        run: exit 1
+  stable:
+    runs-on: ubuntu-latest
+    steps:
+      - name: OK
+        run: echo "stable ok"

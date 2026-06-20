@@ -1,0 +1,25 @@
+name: cancel-always
+
+on: push
+
+jobs:
+  long:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sleep
+        run: sleep 60
+
+  bare:
+    runs-on: ubuntu-latest
+    needs: long
+    steps:
+      - name: Bare
+        run: echo "should-not-run"
+
+  wrap:
+    runs-on: ubuntu-latest
+    needs: long
+    if: always()
+    steps:
+      - name: Wrap
+        run: echo "ran-after-cancel result=${{ needs.long.result }}"

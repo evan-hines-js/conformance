@@ -1,0 +1,17 @@
+name: if-compound
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Both true
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/heads/')
+        run: echo "both-true-ran"
+      - name: One false
+        if: github.event_name == 'push' && github.ref == 'refs/tags/v1'
+        run: echo "should-not-run"
+      - name: Or true
+        if: github.event_name == 'workflow_dispatch' || github.actor == 'brokkr'
+        run: echo "or-true-ran"

@@ -1,0 +1,10 @@
+name: runner-context
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo runner
+        run: echo "os=${{ runner.os }}"

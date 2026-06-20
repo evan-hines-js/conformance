@@ -1,0 +1,15 @@
+name: add-mask
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reveal
+        run: |
+          p1="S3CR3T"
+          p2="T0K3N_XYZ"
+          token="${p1}_${p2}"
+          echo "::add-mask::$token"
+          echo "token is $token"

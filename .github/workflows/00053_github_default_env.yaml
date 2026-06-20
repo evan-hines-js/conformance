@@ -1,0 +1,10 @@
+name: github-default-env
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo defaults
+        run: echo "repo=$GITHUB_REPOSITORY owner=$GITHUB_REPOSITORY_OWNER ref=$GITHUB_REF_NAME event=$GITHUB_EVENT_NAME actor=$GITHUB_ACTOR"

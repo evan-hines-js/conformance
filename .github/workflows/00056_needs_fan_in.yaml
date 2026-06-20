@@ -1,0 +1,34 @@
+name: needs-fan-in
+
+on: push
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        run: echo "setup done"
+  build-a:
+    runs-on: ubuntu-latest
+    needs: setup
+    outputs:
+      arch: ${{ steps.gen.outputs.arch }}
+    steps:
+      - name: Gen
+        id: gen
+        run: echo "arch=amd64" >> "$GITHUB_OUTPUT"
+  build-b:
+    runs-on: ubuntu-latest
+    needs: setup
+    outputs:
+      arch: ${{ steps.gen.outputs.arch }}
+    steps:
+      - name: Gen
+        id: gen
+        run: echo "arch=arm64" >> "$GITHUB_OUTPUT"
+  combine:
+    runs-on: ubuntu-latest
+    needs: [build-a, build-b]
+    steps:
+      - name: Combine
+        run: echo "combined=${{ needs.build-a.outputs.arch }}+${{ needs.build-b.outputs.arch }}"

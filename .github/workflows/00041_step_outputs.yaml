@@ -1,0 +1,13 @@
+name: step-outputs
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate
+        id: gen
+        run: echo "color=blue" >> "$GITHUB_OUTPUT"
+      - name: Consume
+        run: echo "picked ${{ steps.gen.outputs.color }}"

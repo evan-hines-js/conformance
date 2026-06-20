@@ -1,0 +1,17 @@
+name: matrix-exclude
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [linux, windows]
+        version: ["14", "16"]
+        exclude:
+          - os: windows
+            version: "14"
+    steps:
+      - name: Echo
+        run: echo "os=${{ matrix.os }} version=${{ matrix.version }}"

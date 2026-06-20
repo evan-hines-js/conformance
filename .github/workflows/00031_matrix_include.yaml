@@ -1,0 +1,18 @@
+name: matrix-include
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        fruit: [apple, banana]
+        include:
+          - fruit: apple
+            color: red
+          - fruit: cherry
+            color: dark-red
+    steps:
+      - name: Echo
+        run: echo "fruit=${{ matrix.fruit }} color=${{ matrix.color }}"

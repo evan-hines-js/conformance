@@ -1,0 +1,10 @@
+name: reject-bad-registration-token
+
+on: push
+
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Never
+        run: echo "should never run"

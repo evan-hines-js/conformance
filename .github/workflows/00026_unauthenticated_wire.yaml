@@ -1,0 +1,9 @@
+# Protocol-negative: no run is dispatched (the driver curls the listener endpoint
+# directly). Present for corpus-shape consistency.
+name: unauthenticated-wire
+on: push
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: "true"
