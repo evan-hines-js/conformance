@@ -2,6 +2,12 @@ name: commit_status
 
 on: push
 
+# Posting a commit status requires an explicit `statuses: write` grant — the default token is read-only.
+# Byte-for-byte: Brokkr enforces the SAME permission model, so the workflow declares it and the call
+# succeeds on both GitHub and Brokkr (and must be denied on both without it).
+permissions:
+  statuses: write
+
 jobs:
   status:
     runs-on: ubuntu-latest

@@ -1,0 +1,7 @@
+name: greet
+description: Local composite action for conformance.
+runs:
+  using: composite
+  steps:
+    - run: echo "hello from composite ${{ github.repository }}"
+      shell: bash

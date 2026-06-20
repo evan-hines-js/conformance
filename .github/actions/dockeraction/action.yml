@@ -1,0 +1,9 @@
+name: docker-action
+description: Local Docker container action for conformance.
+inputs:
+  who:
+    description: greeting target
+    required: true
+runs:
+  using: docker
+  image: Dockerfile
